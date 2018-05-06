@@ -78,37 +78,7 @@ int main()
 	Sprite spriteTowerD(texture, IntRect(32, 16, 16, 16));
 	Sprite spriteBush(texture, IntRect(64, 0, 16, 16));
 
-
-	for (int i = 0; i < 40; i++) {
-		for (int j = 0; j < 30; j++) {
-			if (map[i][j] == GRASS) {
-				level[i][j] = spriteGrass;
-				level[i][j].setPosition(Vector2f(i * 16, j * 16));
-			}
-
-			if (map[i][j] == DIRT) {
-				level[i][j] = spriteDirt;
-				level[i][j].setPosition(Vector2f(i * 16, j * 16));
-			}
-
-			if (map[i][j] == TOWERU) {
-				level[i][j] = spriteTowerU;
-				level[i][j].setPosition(Vector2f(i * 16, j * 16));
-			}
-			if (map[i][j] == TOWERD) {
-				level[i][j] = spriteTowerD;
-				level[i][j].setPosition(Vector2f(i * 16, j * 16));
-			}
-
-			if (map[i][j] == BUSH) {
-				level[i][j] = spriteBush;
-				level[i][j].setPosition(Vector2f(i * 16, j * 16));
-			}
-
-		}
-
-	}
-
+	window.setFramerateLimit(30);
 	while (window.isOpen())
 	{
 		Event event;
@@ -118,12 +88,49 @@ int main()
 				window.close();
 		}
 
-		window.clear();
 		for (int i = 0; i < 40; i++) {
 			for (int j = 0; j < 30; j++) {
-				window.draw(level[i][j]);
+				if (map[i][j] == GRASS) {
+					level[i][j] = spriteGrass;
+					level[i][j].setPosition(Vector2f(i * 16, j * 16));
+					window.draw(level[i][j]);
+				}
+
+				if (map[i][j] == DIRT) {
+					level[i][j] = spriteDirt;
+					level[i][j].setPosition(Vector2f(i * 16, j * 16));
+					window.draw(level[i][j]);
+				}
+
+				if (map[i][j] == TOWERU) {
+					level[i][j] = spriteGrass;
+					level[i][j].setPosition(Vector2f(i * 16, j * 16));
+					window.draw(level[i][j]);
+					level[i][j] = spriteTowerU;
+					level[i][j].setPosition(Vector2f(i * 16, j * 16));
+					window.draw(level[i][j]);
+				}
+				if (map[i][j] == TOWERD) {
+					level[i][j] = spriteGrass;
+					level[i][j].setPosition(Vector2f(i * 16, j * 16));
+					window.draw(level[i][j]);
+					level[i][j] = spriteTowerD;
+					level[i][j].setPosition(Vector2f(i * 16, j * 16));
+					window.draw(level[i][j]);
+				}
+
+				if (map[i][j] == BUSH) {
+					level[i][j] = spriteGrass;
+					level[i][j].setPosition(Vector2f(i * 16, j * 16));
+					window.draw(level[i][j]);
+					level[i][j] = spriteBush;
+					level[i][j].setPosition(Vector2f(i * 16, j * 16));
+					window.draw(level[i][j]);
+				}
+
 			}
 		}
+
 		window.display();
 	}
 
