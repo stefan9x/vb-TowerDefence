@@ -1,0 +1,9 @@
+﻿cl : Command line warning D9007: '/Gm' requires '/Zi or /ZI'; option ignored
+  Main.cpp
+Main.cpp(86): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+Main.cpp(91): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+Main.cpp(96): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+Main.cpp(100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+Main.cpp(105): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  TowerDefence.vcxproj -> C:\Users\stefa\Desktop\TowerDefence\TowerDefence\Debug\TowerDefence.exe
+  TowerDefence.vcxproj -> C:\Users\stefa\Desktop\TowerDefence\TowerDefence\Debug\TowerDefence.pdb (Full PDB)
