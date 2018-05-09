@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="maps.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
