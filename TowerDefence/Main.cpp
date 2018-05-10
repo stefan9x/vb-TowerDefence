@@ -46,6 +46,7 @@ int columnFields[7] = { 3,5,7,9,12,14,17 };
 int currentI = 0;
 int btnCnt = 0;
 int currentHP = 3;
+int coins = 21;
 
 Texture texture;
 
@@ -70,7 +71,7 @@ void drawMap() {
 				if (map1[row][column] == GRASS) {
 					drawSprite(16, 0, column * 16, row * 16, 16, 16);
 				}
-				else if ((map1[row][column] == DIRT) || (map1[row][column] == DIRTPREVIOUS)) {
+				else if (map1[row][column] == DIRT || map1[row][column] == DIRTPREVIOUS) {
 					drawSprite(0, 0, column * 16, row * 16, 16, 16);
 				}
 				else if (map1[row][column] == BUSH) {
@@ -90,6 +91,7 @@ void drawMap() {
 				}
 				else if (map1[row][column] == CREEP4) {
 					drawSprite(48, 64, column * 16, row * 16, 16, 16);
+
 				}
 				else if (map1[row][column] == LAKE1) {
 					drawSprite(0, 16, column * 16, row * 16, 16, 16);
@@ -139,9 +141,62 @@ void drawMap() {
 				else if (map1[row][column] == HP4) {
 					drawSprite(112, 48, column * 16, row * 16, 16, 16);
 				}
+
+
 			}
 		}
 	}
+}
+
+void printNum(int row, int column, int num) {
+
+	if (num == 0) {
+		drawSprite(16, 48, column * 8, row * 8, 8, 8);
+	}
+	else if (num == 1) {
+		drawSprite(24, 48, column * 8, row * 8, 8, 8);
+	}
+
+	else if (num == 2) {
+		drawSprite(32, 48, column * 8, row * 8, 8, 8);
+	}
+	else if (num == 3) {
+		drawSprite(40, 48, column * 8, row * 8, 8, 8);
+	}
+	else if (num == 4) {
+		drawSprite(16, 56, column * 8, row * 8, 8, 8);
+	}
+	else if (num == 5) {
+		drawSprite(24, 56, column * 8, row * 8, 8, 8);
+	}
+	else if (num == 6) {
+		drawSprite(32, 56, column * 8, row * 8, 8, 8);
+	}
+	else if (num == 7) {
+		drawSprite(40, 56, column * 8, row * 8, 8, 8);
+	}
+	else if (num == 8) {
+		drawSprite(16, 64, column * 8, row * 8, 8, 8);
+	}
+	if (num == 9) {
+		drawSprite(24, 64, column * 8, row * 8, 8, 8);
+	}
+
+
+}
+void printCoins() {
+	int l, r;
+	l = coins / 10;
+	r = coins % 10;
+	printNum(0, 1, r);
+	if (l != 0) {
+		printNum(0, 0, l);
+	}
+	else {
+		drawSprite(16, 0, 0, 0, 8, 8);
+	}
+
+
 }
 
 void moveCreep() {
@@ -154,6 +209,10 @@ void moveCreep() {
 		for (column = 0; column < SIZECOLUMN; column++) {
 			if (map1[row][column] == CREEP4) {
 				map1[row][column] = DIRT;
+				if (coins < 99) {
+					coins++;
+					printCoins();
+				}
 				mapChanges[row][column] = true;
 
 				if (map1[row + 1][column] == DIRTPREVIOUS) {
@@ -174,47 +233,7 @@ void moveCreep() {
 			}
 
 			else if (map1[row][column] == CREEP || map1[row][column] == CREEP1 || map1[row][column] == CREEP2 || map1[row][column] == CREEP3) {
-				pom[i] = map1[row][column];
-
-				map1[row][column] = DIRTPREVIOUS;
-				if (map1[row + 1][column] == DIRT) {
-					map1[row + 1][column] = MOVEDCREEP;
-					mapChanges[row + 1][column] = true;
-					x[i] = row + 1;
-					y[i++] = column;
-				}
-				if (map1[row - 1][column] == DIRT) {
-					map1[row - 1][column] = MOVEDCREEP;
-					mapChanges[row - 1][column] = true;
-					x[i] = row - 1;
-					y[i++] = column;
-				}
-				if (map1[row][column + 1] == DIRT) {
-					map1[row][column + 1] = MOVEDCREEP;
-					mapChanges[row][column + 1] = true;
-					x[i] = row;
-					y[i++] = column + 1;
-				}
-				if (map1[row][column - 1] == DIRT) {
-					map1[row][column - 1] = MOVEDCREEP;
-					mapChanges[row][column - 1] = true;
-					x[i] = row;
-					y[i++] = column - 1;
-				}
-				if (map1[row + 1][column] == DIRTPREVIOUS) {
-					map1[row + 1][column] = DIRT;
-
-				}
-				if (map1[row - 1][column] == DIRTPREVIOUS) {
-					map1[row - 1][column] = DIRT;
-				}
-				if (map1[row][column + 1] == DIRTPREVIOUS) {
-					map1[row][column + 1] = DIRT;
-				}
-				if (map1[row][column - 1] == DIRTPREVIOUS) {
-					map1[row][column - 1] = DIRT;
-				}
-				if (row == 14 || column == 19) {
+				if (column == 19) {
 					map1[row][column] = DIRT;
 					currentHP--;
 					if (currentHP == 2) {
@@ -236,6 +255,60 @@ void moveCreep() {
 						mapChanges[7][19] = true;
 						endGame = true;
 					}
+				}
+				else {
+					pom[i] = map1[row][column];
+					map1[row][column] = DIRTPREVIOUS;
+					if (map1[row + 1][column] == DIRT) {
+						map1[row + 1][column] = MOVEDCREEP;
+						mapChanges[row + 1][column] = true;
+						x[i] = row + 1;
+						y[i++] = column;
+					}
+					if (map1[row - 1][column] == DIRT) {
+						map1[row - 1][column] = MOVEDCREEP;
+						mapChanges[row - 1][column] = true;
+						x[i] = row - 1;
+						y[i++] = column;
+					}
+					if (map1[row][column + 1] == DIRT) {
+						map1[row][column + 1] = MOVEDCREEP;
+						mapChanges[row][column + 1] = true;
+						x[i] = row;
+						y[i++] = column + 1;
+					}
+					if (map1[row][column - 1] == DIRT) {
+						map1[row][column - 1] = MOVEDCREEP;
+						mapChanges[row][column - 1] = true;
+						x[i] = row;
+						y[i++] = column - 1;
+					}
+					if (map1[row + 1][column] == DIRTPREVIOUS) {
+						map1[row + 1][column] = DIRT;
+
+					}
+					if (map1[row - 1][column] == DIRTPREVIOUS) {
+						map1[row - 1][column] = DIRT;
+					}
+					if (map1[row][column + 1] == DIRTPREVIOUS) {
+						map1[row][column + 1] = DIRT;
+					}
+					if (map1[row][column - 1] == DIRTPREVIOUS) {
+						map1[row][column - 1] = DIRT;
+					}
+				}
+				if (map1[row + 1][column] == DIRTPREVIOUS) {
+					map1[row + 1][column] = DIRT;
+
+				}
+				if (map1[row - 1][column] == DIRTPREVIOUS) {
+					map1[row - 1][column] = DIRT;
+				}
+				if (map1[row][column + 1] == DIRTPREVIOUS) {
+					map1[row][column + 1] = DIRT;
+				}
+				if (map1[row][column - 1] == DIRTPREVIOUS) {
+					map1[row][column - 1] = DIRT;
 				}
 				mapChanges[row][column] = true;
 
@@ -284,6 +357,7 @@ void placeTower() {
 			}
 		}
 	}
+
 	if (Keyboard::isKeyPressed(Keyboard::Left)) {
 		if (currentI>0) {
 			if (map1[rowFields[currentI]][columnFields[currentI]] != TOWER &&
@@ -334,14 +408,26 @@ void placeTower() {
 	if (Keyboard::isKeyPressed(Keyboard::Return)) {
 		if (map1[rowFields[currentI]][columnFields[currentI]] == SELECTEDSPOT) {
 			if (btnCnt == 0) {
-				map1[rowFields[currentI]][columnFields[currentI]] = SELECTEDTOWER;
+				if (coins >= 5) {
+					map1[rowFields[currentI]][columnFields[currentI]] = SELECTEDTOWER;
+					coins -= 5;
+					printCoins();
+				}
 			}
 			else {
-				map1[rowFields[currentI]][columnFields[currentI]] = SELECTEDTOWER2;
+				if (coins >= 7) {
+					map1[rowFields[currentI]][columnFields[currentI]] = SELECTEDTOWER2;
+					coins -= 7;
+					printCoins();
+				}
 			}
 		}
 		else if (map1[rowFields[currentI]][columnFields[currentI]] == SELECTEDTOWER) {
-			map1[rowFields[currentI]][columnFields[currentI]] = SELECTEDTOWER2;
+			if (coins >= 2) {
+				map1[rowFields[currentI]][columnFields[currentI]] = SELECTEDTOWER2;
+				coins -= 2;
+				printCoins();
+			}
 		}
 
 	}
@@ -357,13 +443,42 @@ void insertCreep() {
 
 void turretOneFire() {
 	int row, column;
-	for (row = 0; row < SIZEROW; row++) {
-		for (column = 0; column < SIZECOLUMN; column++) {
-			if ((map1[row][column] == TOWER)) { //  || (map1[row][column] == SELECTEDTOWER)
+	for (row = 0; row < SIZEROW - 1; row++) {
+		for (column = 0; column < SIZECOLUMN - 1; column++) {
+			if ((map1[row][column] == TOWER) || map1[row][column] == SELECTEDTOWER
+				) {
+
+
 				int i, j;
 				for (i = -1; i<2; i++) {
 					for (j = -1; j<2; j++) {
 						if (map1[row + i][column + j] == CREEP || map1[row + i][column + j] == CREEP1 || map1[row + i][column + j] == CREEP2 || map1[row + i][column + j] == CREEP3) {
+							drawSprite(80, 80, column * 16, row * 16, 16, 16);
+							mapChanges[row][column] = true;
+							map1[row + i][column + j]++;
+							mapChanges[row + i][column + j] = true;
+
+						}
+
+					}
+				}
+			}
+		}
+	}
+	for (row = 0; row < 500000; row++);
+}
+
+void turretTwoFire() {
+	int row, column;
+	for (row = 0; row < SIZEROW - 1; row++) {
+		for (column = 0; column < SIZECOLUMN - 1; column++) {
+			if ((map1[row][column] == TOWER2) || map1[row][column] == SELECTEDTOWER2) {
+				int i, j;
+				for (i = -1; i<2; i++) {
+					for (j = -1; j<2; j++) {
+						if (map1[row + i][column + j] == CREEP || map1[row + i][column + j] == CREEP1 || map1[row + i][column + j] == CREEP2 || map1[row + i][column + j] == CREEP3) {
+							drawSprite(96, 80, column * 16, row * 16, 16, 16);
+							mapChanges[row][column] = true;
 							map1[row + i][column + j]++;
 							mapChanges[row + i][column + j] = true;
 						}
@@ -373,26 +488,28 @@ void turretOneFire() {
 			}
 		}
 	}
+	for (row = 0; row < 500000; row++);
 }
 
 void drawEndGame() {
 	int row, column;
-	
-	for (row = 0; row < SIZEROW; row++) {
-		for (column = 0; column < SIZECOLUMN; column++) {
-			if (gameOver[row][column] == DIRT) {
-				drawSprite(0, 0, column * 16, row * 16, 16, 16);
-			}
-			else if (gameOver[row][column] == CREEP) {
-				drawSprite(48, 0, column * 16, row * 16, 16, 16);
-				gameOver[row][column] = CREEP4;
-			}
-			else if (gameOver[row][column] == CREEP4) {
-				drawSprite(48, 64, column * 16, row * 16, 16, 16);
-				gameOver[row][column] = CREEP;
+	while (1) {
+		for (row = 0; row < SIZEROW; row++) {
+			for (column = 0; column < SIZECOLUMN; column++) {
+				if (gameOver[row][column] == DIRT) {
+					drawSprite(0, 0, column * 16, row * 16, 16, 16);
+				}
+				else if (gameOver[row][column] == CREEP) {
+					drawSprite(48, 0, column * 16, row * 16, 16, 16);
+					gameOver[row][column] = CREEP4;
+				}
+				else if (gameOver[row][column] == CREEP4) {
+					drawSprite(48, 64, column * 16, row * 16, 16, 16);
+					gameOver[row][column] = CREEP;
+				}
 			}
 		}
-
+		for (row = 0; row < 2500000; row++);
 	}
 }
 
@@ -401,10 +518,11 @@ int main()
 	RenderWindow window(VideoMode(res_x, res_y), "Tower Defence");
 
 	unsigned int creepTimeCnt = 0;
-	int rnd = 0;
+	int rnd, cnt = 0, cnt1 = 0;
 	srand(30);
 	int creepCnt = 0;
 
+	bool firsttime = true;
 	texture.loadFromFile("towerdefence_sprites.png");
 
 	window.setFramerateLimit(10);
@@ -417,7 +535,7 @@ int main()
 			if (event.type == Event::Closed)
 				window.close();
 		}
-
+		/*
 		if (endGame) {
 			drawEndGame();
 			window.display();
@@ -426,25 +544,39 @@ int main()
 				window.draw(level[i]);
 			}
 		} else {
-
+			*/
 			drawMap();
-
-			unsigned int i = 0;
-
-			moveCreep();
-			turretOneFire();
-			if (creepTimeCnt == rnd) {
-				insertCreep();
-				creepCnt++;
-				creepTimeCnt = 0;
-				rnd = (rand() % 20) + 5;
-
+			if (firsttime) {
+				printCoins();
+				drawSprite(8, 64, 16, 0, 8, 8);
+				firsttime = false;
 			}
-			else {
-				creepTimeCnt++;
+			if (endGame) {
+				drawEndGame();
+				break;
 			}
-
 			placeTower();
+			moveCreep();
+
+			if (creepCnt == 5) {
+				insertCreep();
+				creepCnt = 0;
+				/*creepCnt++;
+				creepTimeCnt = 0;
+				rnd = (rand() % 20) + 5;*/
+			}
+
+			if (cnt == 6) {
+				turretOneFire();
+				cnt = 0;
+			}
+			if (cnt1 == 4) {
+				turretTwoFire();
+				cnt1 = 0;
+			}
+			cnt++;
+			cnt1++;
+			creepCnt++;
 
 			for (int i = 0; i < SIZECOLUMN*SIZEROW; i++) {
 				window.draw(level[i]);
@@ -460,7 +592,7 @@ int main()
 			system("cls");
 		}
 
-	}
+	
 
 	return 0;
 }
