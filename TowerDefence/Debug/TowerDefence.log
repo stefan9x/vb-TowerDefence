@@ -1,5 +1,5 @@
 ﻿cl : Command line warning D9007: '/Gm' requires '/Zi or /ZI'; option ignored
   Main.cpp
-Main.cpp(521): warning C4101: 'rnd': unreferenced local variable
+Main.cpp(608): warning C4101: 'rnd': unreferenced local variable
   TowerDefence.vcxproj -> C:\Users\stefa\Desktop\TowerDefence\TowerDefence\Debug\TowerDefence.exe
   TowerDefence.vcxproj -> C:\Users\stefa\Desktop\TowerDefence\TowerDefence\Debug\TowerDefence.pdb (Full PDB)
